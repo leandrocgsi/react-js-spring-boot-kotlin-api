@@ -24,11 +24,30 @@ export default function Books(){
     };
 
     useEffect(() => {
-        api.get('api/book/v1', authorization)
+        api.get('api/book/v1?page=0&limit=4&direction=asc', authorization)
             .then(response => {
                 setBooks(response.data._embedded.bookVOes);
             });
     }, [accessToken])
+
+    async function deleteBook(id) {
+        try {
+            await api.delete(`api/book/v1/${id}`, authorization)
+            setBooks(books.filter(book => book.id !== id))
+        } catch (err) {
+            alert('Delete failed! Try again!')
+        }
+    }
+
+    async function logout() {
+        try {
+            // api.get(`api/book/v1/revoke`, authorization)
+            localStorage.clear();
+            history.push('/');
+        } catch (err) {
+            alert('Logout failed! Try again!')
+        }
+    }
 
     return (
         <div className="book-container">
@@ -36,7 +55,7 @@ export default function Books(){
                 <img src={logoImage} alt="Erudio"/>
                 <span>Welcome, <strong>{username.toUpperCase()}</strong>!</span>
                 <Link className="button" to="book/new">Add New Book</Link>
-                <button type="button">
+                <button onClick={logout} type="button">
                     <FiPower size={18} color="#251FC5" />
                 </button>
             </header>
@@ -58,7 +77,7 @@ export default function Books(){
                             <FiEdit size={20} color="#251FC5"/>
                         </button>
                         
-                        <button type="button">
+                        <button onClick={() => deleteBook(book.id)} type="button">
                             <FiTrash2 size={20} color="#251FC5"/>
                         </button>
                     </li>
