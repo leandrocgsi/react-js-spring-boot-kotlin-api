@@ -50,7 +50,7 @@ export default function NewBook(){
         }
     }
 
-    async function createNewBook(e){
+    async function saveOrUpdate(e){
         e.preventDefault();
 
         const data = {
@@ -61,8 +61,12 @@ export default function NewBook(){
         };
 
         try {
-            await api.post('api/book/v1', data, authorization) ;
-            history.push('/books');
+            if (bookId === '0') {
+                await api.post('api/book/v1', data, authorization) ;
+            } else {
+                data.id = bookId;
+                await api.put('api/book/v1', data, authorization) ;
+            }
         } catch (error) {
             alert('Login failed! Try again!');
         }
@@ -81,7 +85,7 @@ export default function NewBook(){
                         Home
                     </Link>
                 </section>
-                <form onSubmit={createNewBook}>
+                <form onSubmit={saveOrUpdate}>
                     <input
                         placeholder="Title"
                         value={title}

@@ -11,6 +11,7 @@ import logoImage from '../../assets/logo.svg'
 export default function Books(){
 
     const [books, setBooks] = useState([]);
+    const [page, setPage] = useState(1);
 
     const history = useHistory();
     
@@ -24,11 +25,14 @@ export default function Books(){
     };
 
     useEffect(() => {
-        api.get('api/book/v1?page=0&limit=4&direction=asc', authorization)
-            .then(response => {
-                setBooks(response.data._embedded.bookVOes);
-            });
+        fetchMorebooks();
     }, [accessToken])
+
+    async function fetchMorebooks() {
+        const response = await api.get(`api/book/v1?page=${page}&limit=4&direction=asc`, authorization)
+        setBooks([ ...books, ...response.data._embedded.bookVOes ]);
+        setPage(page + 1);
+    }
 
     async function editBook(id) {
         try {
@@ -92,6 +96,7 @@ export default function Books(){
                 ))}
                 
             </ul>
+            <button className='button' onClick={fetchMorebooks} type="button">Load More</button>
         </div>
     );
 }
