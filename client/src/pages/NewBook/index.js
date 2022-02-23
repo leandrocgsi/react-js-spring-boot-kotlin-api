@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {useHistory, useParams, Link } from 'react-router-dom';
+import {useNavigate, useParams, Link } from 'react-router-dom';
 import { FiArrowLeft } from 'react-icons/fi'
 
 import api from '../../services/api'
@@ -18,7 +18,7 @@ export default function NewBook(){
 
     const { bookId } = useParams();
 
-    const history = useHistory();
+    const navigate = useNavigate();
     
     const accessToken = localStorage.getItem('accessToken');
 
@@ -46,7 +46,7 @@ export default function NewBook(){
             setLaunchDate(adjustedDate);
         } catch (err) {
             alert('Error recovering Book! Try again!');
-            history.push('/books');
+            navigate('/books');
         }
     }
 
@@ -70,7 +70,7 @@ export default function NewBook(){
         } catch (error) {
             alert('Login failed! Try again!');
         }
-        history.push('/books');
+        navigate('/books');
     };
 
     return (
