@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "409de23b-efc4-408b-819d-d855ed28448d",
+		"_postman_id": "b75963ad-2ac5-416b-8f64-02fd9bcd9b64",
 		"name": "RESTful API with Kotlin 1.6.10 and Spring Boot 3.0.0-M1",
 		"description": "Some description about your API.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
@@ -2191,7 +2191,7 @@
 									},
 									{
 										"key": "Authorization",
-										"value": "Bearer {{refreshToken}}",
+										"value": "Bearer {{accessToken}}",
 										"type": "text"
 									}
 								],
@@ -2452,7 +2452,7 @@
 									},
 									{
 										"key": "Authorization",
-										"value": "Bearer {{refreshToken}}",
+										"value": "Bearer {{accessToken}}",
 										"type": "text"
 									}
 								],
@@ -2720,13 +2720,13 @@
 									},
 									{
 										"key": "Authorization",
-										"value": "Bearer {{refreshToken}}",
+										"value": "Bearer {{accessToken}}",
 										"type": "text"
 									}
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"id\": 58506145,\n    \"author\": \"amet id cupi\",\n    \"launchDate\": \"1988-07-04T06:28:50.279Z\",\n    \"price\": 79309139.85579339,\n    \"title\": \"Excepteur commodo irure mollit\",\n    \"_links\": {}\n}",
+									"raw": "{\n\"author\": \"Viktor Mayer-Schonberger e Kenneth Kukier\",\n                \"launchDate\": \"2017-11-07T02:00:00.000+00:00\",\n                \"price\": 54.0,\n                \"title\": \"Big Data: como extrair volume, variedade, velocidade e valor da avalanche de informação cotidiana\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -2908,7 +2908,7 @@
 								"header": [
 									{
 										"key": "Authorization",
-										"value": "Bearer {{refreshToken}}",
+										"value": "Bearer {{accessToken}}",
 										"type": "text"
 									}
 								],
@@ -3135,8 +3135,8 @@
 										"exec": [
 											"if (responseCode.code >= 200 && responseCode.code <= 299) {",
 											"    var jsonData = JSON.parse(responseBody);",
-											"    postman.setEnvironmentVariable('bearer_token', jsonData.accessToken);",
-											"    postman.setEnvironmentVariable('refreshToken', jsonData.accessToken);",
+											"    postman.setEnvironmentVariable('accessToken', jsonData.accessToken);",
+											"    postman.setEnvironmentVariable('refreshToken', jsonData.refreshToken);",
 											"}"
 										],
 										"type": "text/javascript"
