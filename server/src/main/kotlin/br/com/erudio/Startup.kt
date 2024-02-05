@@ -15,11 +15,13 @@ class Startup
 fun main(args: Array<String>) {
 	runApplication<Startup>(*args)
 
-	/** val encoders: MutableMap<String, PasswordEncoder> = HashMap()
+	/**
+	val encoders: MutableMap<String, PasswordEncoder> = HashMap()
 	encoders["pbkdf2"] = Pbkdf2PasswordEncoder()
 	val passwordEncoder = DelegatingPasswordEncoder("pbkdf2", encoders)
 	passwordEncoder.setDefaultPasswordEncoderForMatches(Pbkdf2PasswordEncoder())
 
-	val result = passwordEncoder.encode("admin234")
-	println("My hash $result")*/
+	val result = passwordEncoder.encode("foo-bar")
+	println("My hash $result")
+	*/
 }

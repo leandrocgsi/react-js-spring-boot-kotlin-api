@@ -1,7 +1,7 @@
 cors:
   originPatterns: http://localhost:3000,http://localhost:8080,https://erudio.com.br
 file:
-  upload-dir: /Code/SpringBootPlayground/UploadDir
+  upload-dir: /Code/UploadDir
 security:
   jwt:
     token:
@@ -9,25 +9,24 @@ security:
       expire-length: 3600000
 spring:
   datasource:
-    driverClassName: com.mysql.cj.jdbc.Driver
+    driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/react_with_spring_boot_and_kotlin?useTimezone=true&serverTimezone=UTC
     username: root
     password: admin123
-  flyway:
-      url: jdbc:mysql://localhost:3306/react_with_spring_boot_and_kotlin?useTimezone=true&serverTimezone=UTC
-      user: root
-      password: admin123
   jpa:
+    open-in-view: false
     hibernate:
-      ddl-auto: update
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.MySQL8Dialect
+      ddl-auto: none
     show-sql: false
-
-springdoc:
-  pathsToMatch:
-    - /auth/**
+  servlet:
+    multipart:
+      enabled: true
+      file-size-threshold: 2KB
+      max-file-size: 200MB
+      max-request-size: 215MB
+spring-doc:
+  paths-to-match:
     - /api/**/v1/**
+    - /auth/**
   swagger-ui:
     use-root-path: true

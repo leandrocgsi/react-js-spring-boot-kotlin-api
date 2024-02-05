@@ -1,6 +1,6 @@
 package br.com.erudio.integrationtests.controller.withjson
 
-import br.com.erudio.configs.TestsConfig
+import br.com.erudio.integrationtests.TestConfigs
 import br.com.erudio.integrationtests.testcontainers.AbstractIntegrationTest
 import br.com.erudio.integrationtests.vo.AccountCredentialsVO
 import br.com.erudio.integrationtests.vo.BookVO
@@ -27,14 +27,14 @@ import java.util.*
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class  BookControllerJsonTest : AbstractIntegrationTest() {
 
-    private var specification: RequestSpecification? = null
-    private var objectMapper: ObjectMapper? = null
-    private var book: BookVO? = null
+    private lateinit var specification: RequestSpecification
+    private lateinit var objectMapper: ObjectMapper
+    private lateinit var book: BookVO
 
     @BeforeAll
     fun setup() {
         objectMapper = ObjectMapper()
-        objectMapper!!.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
+        objectMapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
         book = BookVO()
     }
 
@@ -47,8 +47,8 @@ class  BookControllerJsonTest : AbstractIntegrationTest() {
 
         val token = given()
             .basePath("/auth/signin")
-            .port(TestsConfig.SERVER_PORT)
-            .contentType(TestsConfig.CONTENT_TYPE_JSON)
+            .port(TestConfigs.SERVER_PORT)
+            .contentType(TestConfigs.CONTENT_TYPE_JSON)
             .body(user)
             .`when`()
             .post()
@@ -60,9 +60,9 @@ class  BookControllerJsonTest : AbstractIntegrationTest() {
             .accessToken
 
         specification = RequestSpecBuilder()
-            .addHeader(TestsConfig.HEADER_PARAM_AUTHORIZATION, "Bearer $token")
+            .addHeader(TestConfigs.HEADER_PARAM_AUTHORIZATION, "Bearer $token")
             .setBasePath("/api/book/v1")
-            .setPort(TestsConfig.SERVER_PORT)
+            .setPort(TestConfigs.SERVER_PORT)
             .addFilter(RequestLoggingFilter(LogDetail.ALL))
             .addFilter(ResponseLoggingFilter(LogDetail.ALL))
             .build()
@@ -74,7 +74,7 @@ class  BookControllerJsonTest : AbstractIntegrationTest() {
     fun testCreate() {
         mockBook()
         val content: String = given().spec(specification)
-            .contentType(TestsConfig.CONTENT_TYPE_JSON)
+            .contentType(TestConfigs.CONTENT_TYPE_JSON)
             .body(book)
             .`when`()
             .post()
@@ -84,26 +84,26 @@ class  BookControllerJsonTest : AbstractIntegrationTest() {
             .body()
             .asString()
 
-        book = objectMapper!!.readValue(content, BookVO::class.java)
+        book = objectMapper.readValue(content, BookVO::class.java)
 
-        assertNotNull(book!!.id)
-        assertNotNull(book!!.title)
-        assertNotNull(book!!.author)
-        assertNotNull(book!!.price)
-        assertTrue(book!!.id!! > 0)
-        assertEquals("Docker Deep Dive", book!!.title)
-        assertEquals("Nigel Poulton", book!!.author)
-        assertEquals(55.99, book!!.price)
+        assertNotNull(book.id)
+        assertNotNull(book.title)
+        assertNotNull(book.author)
+        assertNotNull(book.price)
+        assertTrue(book.id > 0)
+        assertEquals("Docker Deep Dive", book.title)
+        assertEquals("Nigel Poulton", book.author)
+        assertEquals(55.99, book.price)
     }
 
     @Test
     @Order(3)
     @Throws(JsonMappingException::class, JsonProcessingException::class)
     fun testUpdate() {
-        book!!.title = "Docker Deep Dive - Updated"
+        book.title = "Docker Deep Dive - Updated"
 
         val content: String = given().spec(specification)
-            .contentType(TestsConfig.CONTENT_TYPE_JSON)
+            .contentType(TestConfigs.CONTENT_TYPE_JSON)
             .body(book)
             .`when`()
             .put()
@@ -113,13 +113,13 @@ class  BookControllerJsonTest : AbstractIntegrationTest() {
             .body()
             .asString()
 
-        val bookUpdated: BookVO = objectMapper!!.readValue(content, BookVO::class.java)
+        val bookUpdated: BookVO = objectMapper.readValue(content, BookVO::class.java)
 
         assertNotNull(bookUpdated.id)
         assertNotNull(bookUpdated.title)
         assertNotNull(bookUpdated.author)
         assertNotNull(bookUpdated.price)
-        assertEquals(bookUpdated.id, book!!.id)
+        assertEquals(bookUpdated.id, book.id)
         assertEquals("Docker Deep Dive - Updated", bookUpdated.title)
         assertEquals("Nigel Poulton", bookUpdated.author)
         assertEquals(55.99, bookUpdated.price)
@@ -130,8 +130,8 @@ class  BookControllerJsonTest : AbstractIntegrationTest() {
     @Throws(JsonMappingException::class, JsonProcessingException::class)
     fun testFindById() {
         val content: String = given().spec(specification)
-            .contentType(TestsConfig.CONTENT_TYPE_JSON)
-            .pathParam("id", book!!.id)
+            .contentType(TestConfigs.CONTENT_TYPE_JSON)
+            .pathParam("id", book.id)
             .`when`()
             .get("{id}")
             .then()
@@ -139,12 +139,12 @@ class  BookControllerJsonTest : AbstractIntegrationTest() {
             .extract()
             .body()
             .asString()
-        val foundBook: BookVO = objectMapper!!.readValue(content, BookVO::class.java)
+        val foundBook: BookVO = objectMapper.readValue(content, BookVO::class.java)
         assertNotNull(foundBook.id)
         assertNotNull(foundBook.title)
         assertNotNull(foundBook.author)
         assertNotNull(foundBook.price)
-        assertEquals(foundBook.id, book!!.id)
+        assertEquals(foundBook.id, book.id)
         assertEquals("Docker Deep Dive - Updated", foundBook.title)
         assertEquals("Nigel Poulton", foundBook.author)
         assertEquals(55.99, foundBook.price)
@@ -154,8 +154,8 @@ class  BookControllerJsonTest : AbstractIntegrationTest() {
     @Order(5)
     fun testDelete() {
         given().spec(specification)
-            .contentType(TestsConfig.CONTENT_TYPE_JSON)
-            .pathParam("id", book!!.id)
+            .contentType(TestConfigs.CONTENT_TYPE_JSON)
+            .pathParam("id", book.id)
             .`when`()
             .delete("{id}")
             .then()
@@ -166,9 +166,12 @@ class  BookControllerJsonTest : AbstractIntegrationTest() {
     @Order(6)
     @Throws(JsonMappingException::class, JsonProcessingException::class)
     fun testFindAll() {
-        val content = given().spec(specification)
-            .contentType(TestsConfig.CONTENT_TYPE_JSON)
-            .queryParams("page", 0 , "limit", 5, "direction", "asc")
+        val strContent = given().spec(specification)
+            .contentType(TestConfigs.CONTENT_TYPE_JSON)
+            .queryParams(
+                "page", 0,
+                "limit", 12,
+                "direction", "asc")
             .`when`()
             .get()
             .then()
@@ -177,36 +180,63 @@ class  BookControllerJsonTest : AbstractIntegrationTest() {
             .body()
             .asString()
 
-        val wrapper = objectMapper!!.readValue(content, WrapperBookVO::class.java)
-        val books = wrapper.embedded!!.books
+        val wrapper = objectMapper.readValue(strContent, WrapperBookVO::class.java)
+        val content = wrapper.embedded!!.books
 
-        val foundBookOne: BookVO? = books?.get(0)
+        val foundBookOne = content?.get(0)
 
         assertNotNull(foundBookOne!!.id)
         assertNotNull(foundBookOne.title)
         assertNotNull(foundBookOne.author)
         assertNotNull(foundBookOne.price)
-        assertTrue(foundBookOne.id!! > 0)
+        assertTrue(foundBookOne.id > 0)
         assertEquals("Big Data: como extrair volume, variedade, velocidade e valor da avalanche de informação cotidiana", foundBookOne.title)
         assertEquals("Viktor Mayer-Schonberger e Kenneth Kukier", foundBookOne.author)
         assertEquals(54.00, foundBookOne.price)
 
-        val foundBookFive: BookVO = books[4]
+        val foundBookFive: BookVO? = content?.get(4)
 
-        assertNotNull(foundBookFive.id)
+        assertNotNull(foundBookFive!!.id)
         assertNotNull(foundBookFive.title)
         assertNotNull(foundBookFive.author)
         assertNotNull(foundBookFive.price)
-        assertTrue(foundBookFive.id!! > 0)
+        assertTrue(foundBookFive.id > 0)
         assertEquals("Domain Driven Design", foundBookFive.title)
         assertEquals("Eric Evans", foundBookFive.author)
         assertEquals(92.0, foundBookFive.price)
     }
 
+    @Test
+    @Order(7)
+    fun testHATEOAS() {
+        val content = given().spec(specification)
+            .contentType(TestConfigs.CONTENT_TYPE_JSON)
+            .queryParams(
+                "page", 0,
+                "limit", 12,
+                "direction", "asc")
+            .`when`()
+            .get()
+            .then()
+            .statusCode(200)
+            .extract()
+            .body()
+            .asString().replace(Regex("[\\r\\n\\s]+"), "")
+
+        assertTrue(content.contains(""""_links":{"self":{"href":"http://localhost:8888/api/book/v1/12"}}}"""))
+        assertTrue(content.contains(""""_links":{"self":{"href":"http://localhost:8888/api/book/v1/3"}}}"""))
+        assertTrue(content.contains(""""_links":{"self":{"href":"http://localhost:8888/api/book/v1/5"}}}"""))
+
+        assertTrue(content.contains(""""first":{"href":"http://localhost:8888/api/book/v1?limit=12&direction=asc&page=0&size=12&sort=title,asc"}"""))
+        assertTrue(content.contains(""""self":{"href":"http://localhost:8888/api/book/v1?limit=12&direction=asc&page=0&size=12&sort=title,asc"}"""))
+        assertTrue(content.contains(""""next":{"href":"http://localhost:8888/api/book/v1?limit=12&direction=asc&page=1&size=12&sort=title,asc"}"""))
+        assertTrue(content.contains(""""last":{"href":"http://localhost:8888/api/book/v1?limit=12&direction=asc&page=1&size=12&sort=title,asc"}"""))
+    }
+
     private fun mockBook() {
-        book!!.title = "Docker Deep Dive"
-        book!!.author = "Nigel Poulton"
-        book!!.price = 55.99
-        book!!.launchDate = Date()
+        book.title = "Docker Deep Dive"
+        book.author = "Nigel Poulton"
+        book.price = 55.99
+        book.launchDate = Date()
     }
 }

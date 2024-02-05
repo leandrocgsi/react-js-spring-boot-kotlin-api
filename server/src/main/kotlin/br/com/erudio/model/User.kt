@@ -3,17 +3,14 @@ package br.com.erudio.model
 import jakarta.persistence.*
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
-import java.io.Serializable
-import java.util.ArrayList
 
 @Entity
 @Table(name = "users")
-class User : UserDetails, Serializable {
+class User : UserDetails{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    var id: Long? = null
+    var id: Long = 0
 
     @Column(name = "user_name", unique = true)
     var userName: String? = null
@@ -42,21 +39,16 @@ class User : UserDetails, Serializable {
         joinColumns = [JoinColumn(name = "id_user")],
         inverseJoinColumns = [JoinColumn(name = "id_permission")]
     )
-
     var permissions: List<Permission>? = null
 
     val roles: List<String?>
-        get() {
-            val roles: MutableList<String?> = ArrayList()
-            for (permission in permissions!!) {
-                roles.add(permission.description)
-            }
-            return roles
-        }
-
-    fun setPassword(password: String?) {
-        this.password = password
-    }
+     get(){
+         val roles: MutableList<String?> = ArrayList()
+         for (permission in permissions!!) {
+             roles.add(permission.description)
+         }
+         return roles
+     }
 
     override fun getAuthorities(): Collection<GrantedAuthority> {
         return permissions!!

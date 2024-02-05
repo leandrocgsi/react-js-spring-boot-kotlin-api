@@ -14,13 +14,13 @@ class OpenApiConfig {
         return OpenAPI()
             .info(
                 Info()
-                    .title("RESTful API with Kotlin 1.6.10 and Spring Boot 3.0.0-M1")
+                    .title("REST API RESTful from Zero to AWS with Kotlin 1.9.10 and Spring Boot 3.2.0")
                     .version("v1")
                     .description("Some description about your API.")
                     .termsOfService("https://pub.erudio.com.br/meus-cursos")
                     .license(
                         License().name("Apache 2.0")
-                            .url("https://pub.erudio.com.br/meus-cursos")
+                            .url("https://pub.erudio.com.br/kr/blog_rest_spring_kotlin")
                     )
             )
     }

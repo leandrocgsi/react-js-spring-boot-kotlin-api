@@ -5,17 +5,14 @@ import org.springframework.security.core.GrantedAuthority
 
 @Entity
 @Table(name = "permission")
-class Permission : GrantedAuthority {
+class Permission : GrantedAuthority{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    var id: Long? = null
+    var id: Long = 0
 
-    @Column(name = "description")
+    @Column(name = "description", length = 255)
     var description: String? = null
 
-    override fun getAuthority(): String {
-        return description!!
-    }
+    override fun getAuthority() = description!!
 }
