@@ -8,7 +8,7 @@
 [![GitHub repo](https://img.shields.io/badge/GitHub-Repository-green.svg)](https://github.com/leandrocgsi/react-js-spring-boot-kotlin-api)
 [![Continuous Integration with GitHub, GitHub Actions and Docker Hub](https://github.com/leandrocgsi/rest-react-playground/actions/workflows/continuous-integration-kotlin.yml/badge.svg)](https://github.com/leandrocgsi/rest-react-playground/actions/workflows/continuous-integration-kotlin.yml)
 
-[![Image](https://github.com/leandrocgsi/RestWithSpringBootUdemy/blob/master/Images/react_kotlin.png?raw=true "React JS consumindo REST API RESTful em Spring Boot e Kotlin")](https://www.udemy.com/course/aprenda-consumir-apis-restful-em-spring-boot-kotlin-com-react-js-axios/?couponCode=GTHB_FLASH_SALE2021)
+[![Image](https://github.com/leandrocgsi/RestWithSpringBootUdemy/blob/master/Images/react_kotlin.png?raw=true "React JS consumindo REST API's RESTful em Spring Boot 3.2 e Kotlin  1.9.10")](https://www.udemy.com/course/aprenda-consumir-apis-restful-em-spring-boot-kotlin-com-react-js-axios/?couponCode=GTHB_FLASH_SALE2021)
 
 ## [Related Courses](https://pub.erudio.com.br/meus-cursos)
 
@@ -24,7 +24,7 @@
 
 [![Image](https://github.com/leandrocgsi/RestWithSpringBootUdemy/blob/master/Images/docker_para_amazon_aws_implante_apps_java_e_dot_net_com_travis_ci.png?raw=true "Docker para Amazon AWS Implante Apps Java e .NET com Travis CI")](https://www.udemy.com/course/docker-para-amazon-aws-implante-aplicacoes-java-e-net/?couponCode=GTHB_FLASH_SALE2021)
 
-[![Image](https://raw.githubusercontent.com/leandrocgsi/RestWithSpringBootUdemy/master/Images/react_java.png "React JS consumindo REST API RESTful em Spring Boot Java 16")](https://www.udemy.com/course/aprenda-consumir-apis-restful-em-spring-boot-java-com-react-js-axios/?couponCode=GTHB_FLASH_SALE2021)
+[![Image](https://raw.githubusercontent.com/leandrocgsi/RestWithSpringBootUdemy/master/Images/react_java.png "React JS consumindo REST API RESTful em Spring Boot Java 21")](https://www.udemy.com/course/aprenda-consumir-apis-restful-em-spring-boot-java-com-react-js-axios/?couponCode=GTHB_FLASH_SALE2021)
 
 [![Image](https://github.com/leandrocgsi/RestWithSpringBootUdemy/blob/master/Images/react_.net6.png?raw=true "React JS consumindo REST API RESTful em ASP.NET Core .NET 6")](https://www.udemy.com/course/aprenda-consumir-apis-restful-em-asp-dot-net-core-6-com-react-js-axios/?couponCode=GTHB_FLASH_SALE2021)
 
@@ -45,4 +45,4 @@
 [![Image](https://github.com/leandrocgsi/RestWithSpringBootUdemy/blob/master/Images/docker_to_amazon_aws_deploy_apps_java_and_dot_net_with_travis_ci.png?raw=true "Docker to Amazon AWS Deploy Java & .NET Apps with Travis CI")](https://www.udemy.com/course/docker-to-amazon-aws-deploy-java-net-apps-with-travis-ci/?couponCode=GTHB_FLASH_SALE2021)
 
 
-[<img src="https://github.com/leandrocgsi/react-js-spring-boot-api/blob/main/Images/course_page.png?raw=true?raw=true">](https://www.udemy.com/course/aprenda-consumir-apis-restful-em-spring-boot-java-com-react-js-axios/?couponCode=GTHB_FLASH_SALE2021)
+[<img src="https://github.com/leandrocgsi/react-js-spring-boot-kotlin-api/blob/main/Images/course_page.png?raw=true?raw=true">](https://www.udemy.com/course/aprenda-consumir-apis-restful-em-spring-boot-kotlin-com-react-js-axios/?couponCode=GTHB_FLASH_SALE2021)
